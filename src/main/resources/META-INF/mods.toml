@@ -1,0 +1,21 @@
+modLoader = "javafml"
+loaderVersion = "[36,)"
+license = "¯\\_(ツ)_/¯"
+[[mods]]
+modId = "opmaak"
+version = "${file.jarVersion}"
+displayName = "Opmaak"
+authors = "nierennakker & SudoQ"
+description = '''
+make your life more difficult
+'''
+[[dependencies.opmaak]]
+modId = "forge"
+mandatory = true
+versionRange = "[36,)"
+side = "CLIENT"
+[[dependencies.opmaak]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.5,1.17)"
+side = "CLIENT"
