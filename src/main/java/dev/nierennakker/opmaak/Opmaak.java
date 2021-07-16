@@ -2,6 +2,7 @@ package dev.nierennakker.opmaak;
 
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
 import dev.nierennakker.opmaak.components.HotbarComponent;
+import dev.nierennakker.opmaak.components.OffhandComponent;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
@@ -32,6 +33,7 @@ public class Opmaak {
     public void enqueueIMC(InterModEnqueueEvent event) {
         InterModComms.sendTo(IOpmaakAPI.MOD_ID, IOpmaakAPI.API_METHOD, () -> (Consumer<IOpmaakAPI>) (api) -> {
             api.registerComponent(new HotbarComponent());
+            api.registerComponent(new OffhandComponent());
         });
     }
 
