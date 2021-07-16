@@ -26,11 +26,6 @@ public class OffhandComponent extends AbstractGui implements IComponent {
             return;
         }
 
-        RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-        RenderSystem.enableRescaleNormal();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-
         mc.getTextureManager().bind(IngameGui.WIDGETS_LOCATION);
 
         ItemStack itemstack = player.getOffhandItem();
@@ -39,8 +34,5 @@ public class OffhandComponent extends AbstractGui implements IComponent {
             this.blit(stack, x, y - 1, 24, 22, 29, 24);
             mc.gui.renderSlot(x + 3, y + 3, delta, player, itemstack);
         }
-
-        RenderSystem.disableRescaleNormal();
-        RenderSystem.disableBlend();
     }
 }
