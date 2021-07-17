@@ -71,10 +71,9 @@ public class ComponentWidget extends AbstractButton {
         }
 
         CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(this.component);
-        int x = nbt.getInt("x");
-        int y = nbt.getInt("y");
+        Tuple<Integer, Integer> position = Alignment.toAbsolute(nbt.getString("alignment"), nbt.getInt("x"), nbt.getInt("y"));
 
-        if (this.x == x && this.y == y) {
+        if (position != null && this.x == position.getA() && this.y == position.getB()) {
             this.onPress();
         }
 
