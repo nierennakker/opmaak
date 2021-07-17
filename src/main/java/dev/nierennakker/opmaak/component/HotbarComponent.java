@@ -1,4 +1,4 @@
-package dev.nierennakker.opmaak.components;
+package dev.nierennakker.opmaak.component;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.nierennakker.opmaak.api.IComponent;
@@ -8,11 +8,18 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.IngameGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class HotbarComponent extends AbstractGui implements IComponent {
     @Override
     public ResourceLocation getID() {
         return new ResourceLocation(IOpmaakAPI.MOD_ID, "hotbar");
+    }
+
+    @Override
+    public ITextComponent getName() {
+        return new TranslationTextComponent("component.hotbar");
     }
 
     @Override
@@ -28,5 +35,15 @@ public class HotbarComponent extends AbstractGui implements IComponent {
 
             mc.gui.renderSlot(offsetX, offsetY, delta, player, player.inventory.items.get(i));
         }
+    }
+
+    @Override
+    public int getWidth() {
+        return 182;
+    }
+
+    @Override
+    public int getHeight() {
+        return 22;
     }
 }

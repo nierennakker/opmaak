@@ -1,5 +1,6 @@
 package dev.nierennakker.opmaak.impl;
 
+import com.google.common.collect.ImmutableList;
 import dev.nierennakker.opmaak.Opmaak;
 import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
@@ -23,6 +24,11 @@ public enum OpmaakAPI implements IOpmaakAPI {
         }
 
         this.components.add(component);
+    }
+
+    @Override
+    public List<IComponent> getComponents() {
+        return ImmutableList.copyOf(this.components);
     }
 
     @Override

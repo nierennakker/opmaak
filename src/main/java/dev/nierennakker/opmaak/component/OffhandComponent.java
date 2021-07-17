@@ -1,4 +1,4 @@
-package dev.nierennakker.opmaak.components;
+package dev.nierennakker.opmaak.component;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.nierennakker.opmaak.api.IComponent;
@@ -9,11 +9,18 @@ import net.minecraft.client.gui.IngameGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class OffhandComponent extends AbstractGui implements IComponent {
     @Override
     public ResourceLocation getID() {
         return new ResourceLocation(IOpmaakAPI.MOD_ID, "offhand");
+    }
+
+    @Override
+    public ITextComponent getName() {
+        return new TranslationTextComponent("component.offhand");
     }
 
     @Override
@@ -28,5 +35,15 @@ public class OffhandComponent extends AbstractGui implements IComponent {
 
         this.blit(stack, x, y - 1, 24, 22, 29, 24);
         mc.gui.renderSlot(x + 3, y + 3, delta, player, item);
+    }
+
+    @Override
+    public int getWidth() {
+        return 22;
+    }
+
+    @Override
+    public int getHeight() {
+        return 22;
     }
 }

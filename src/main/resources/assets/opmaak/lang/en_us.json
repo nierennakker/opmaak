@@ -1,3 +1,7 @@
 {
-  "key.opmaak": "Opmaak"
+  "key.opmaak": "Opmaak",
+  "screen.opmaak": "Opmaak",
+  "component.attack_indicator": "Attack Indicator",
+  "component.hotbar": "Hotbar",
+  "component.offhand": "Offhand"
 }

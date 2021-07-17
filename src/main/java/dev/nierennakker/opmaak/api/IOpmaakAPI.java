@@ -10,5 +10,7 @@ public interface IOpmaakAPI {
 
     void registerComponent(IComponent component);
 
+    List<IComponent> getComponents();
+
     List<IComponent> getComponentsForType(ElementType type);
 }

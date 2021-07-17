@@ -1,9 +1,9 @@
 package dev.nierennakker.opmaak;
 
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
-import dev.nierennakker.opmaak.components.AttackIndicatorComponent;
-import dev.nierennakker.opmaak.components.HotbarComponent;
-import dev.nierennakker.opmaak.components.OffhandComponent;
+import dev.nierennakker.opmaak.component.AttackIndicatorComponent;
+import dev.nierennakker.opmaak.component.HotbarComponent;
+import dev.nierennakker.opmaak.component.OffhandComponent;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

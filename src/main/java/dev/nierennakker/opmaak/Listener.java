@@ -1,8 +1,10 @@
 package dev.nierennakker.opmaak;
 
 import dev.nierennakker.opmaak.api.IComponent;
+import dev.nierennakker.opmaak.api.IComponentScreen;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
+import dev.nierennakker.opmaak.screen.OpmaakScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,6 +30,12 @@ public class Listener {
         event.setCanceled(true);
 
         for (IComponent component : components) {
+            if (mc.screen instanceof IComponentScreen) {
+                if (!((IComponentScreen) mc.screen).displayComponent(component)) {
+                    continue;
+                }
+            }
+
             component.render(event.getMatrixStack(), mc, player, 0, 0, event.getPartialTicks());
         }
     }
@@ -35,7 +43,7 @@ public class Listener {
     @SubscribeEvent
     public static void keyPress(InputEvent.KeyInputEvent event) {
         if (Opmaak.KEY.consumeClick()) {
-            Opmaak.LOGGER.info("pressed");
+            Minecraft.getInstance().setScreen(new OpmaakScreen());
         }
     }
 }

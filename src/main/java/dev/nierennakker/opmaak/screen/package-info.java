@@ -1,6 +1,6 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package dev.nierennakker.opmaak.components;
+package dev.nierennakker.opmaak.screen;
 
 import mcp.MethodsReturnNonnullByDefault;
 
