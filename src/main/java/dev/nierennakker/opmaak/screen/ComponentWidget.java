@@ -4,11 +4,13 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.nierennakker.opmaak.Opmaak;
 import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
+import dev.nierennakker.opmaak.util.Alignment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.widget.button.AbstractButton;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Tuple;
 import org.lwjgl.glfw.GLFW;
 
 public class ComponentWidget extends AbstractButton {
@@ -104,7 +106,13 @@ public class ComponentWidget extends AbstractButton {
     }
 
     private void savePosition(CompoundNBT nbt) {
-        nbt.putInt("x", this.x);
-        nbt.putInt("y", this.y);
+        Tuple<Integer, Integer> position = Alignment.toRelative(this.x, this.y, nbt.getString("alignment"));
+
+        if (position == null) {
+            return;
+        }
+
+        nbt.putInt("x", position.getA());
+        nbt.putInt("y", position.getB());
     }
 }

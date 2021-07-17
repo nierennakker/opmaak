@@ -4,8 +4,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.api.IComponentScreen;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
+import dev.nierennakker.opmaak.util.Alignment;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class OpmaakScreen extends Screen implements IComponentScreen {
@@ -17,10 +19,13 @@ public class OpmaakScreen extends Screen implements IComponentScreen {
     public void init() {
         for (IComponent component : OpmaakAPI.INSTANCE.getComponents()) {
             CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(component);
-            int x = nbt.getInt("x");
-            int y = nbt.getInt("y");
+            Tuple<Integer, Integer> position = Alignment.toAbsolute(nbt.getString("alignment"), nbt.getInt("x"), nbt.getInt("y"));
 
-            this.addButton(new ComponentWidget(component, x, y));
+            if (position == null) {
+                continue;
+            }
+
+            this.addButton(new ComponentWidget(component, position.getA(), position.getB()));
         }
     }
 

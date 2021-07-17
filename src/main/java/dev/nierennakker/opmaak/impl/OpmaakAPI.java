@@ -64,6 +64,7 @@ public enum OpmaakAPI implements IOpmaakAPI {
 
             nbt.putInt("x", 0);
             nbt.putInt("y", 0);
+            nbt.putString("alignment", "middle-center");
             compound.put(key, nbt);
 
             this.nbt.put("components", compound);

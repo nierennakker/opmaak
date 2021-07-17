@@ -5,9 +5,11 @@ import dev.nierennakker.opmaak.api.IComponentScreen;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
 import dev.nierennakker.opmaak.screen.OpmaakScreen;
+import dev.nierennakker.opmaak.util.Alignment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -38,10 +40,13 @@ public class Listener {
             }
 
             CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(component);
-            int x = nbt.getInt("x");
-            int y = nbt.getInt("y");
+            Tuple<Integer, Integer> position = Alignment.toAbsolute(nbt.getString("alignment"), nbt.getInt("x"), nbt.getInt("y"));
 
-            component.render(event.getMatrixStack(), nbt, player, x, y, event.getPartialTicks());
+            if (position == null) {
+                continue;
+            }
+
+            component.render(event.getMatrixStack(), nbt, player, position.getA(), position.getB(), event.getPartialTicks());
         }
     }
 
