@@ -27,7 +27,7 @@ public class Listener {
         event.setCanceled(true);
 
         for (IComponent component : components) {
-            component.render(event.getMatrixStack(), player, 0, 0, event.getPartialTicks());
+            component.render(event.getMatrixStack(), mc, player, 0, 0, event.getPartialTicks());
         }
     }
 }

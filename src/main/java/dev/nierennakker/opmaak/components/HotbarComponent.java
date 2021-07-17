@@ -1,7 +1,6 @@
 package dev.nierennakker.opmaak.components;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
 import net.minecraft.client.Minecraft;
@@ -17,14 +16,7 @@ public class HotbarComponent extends AbstractGui implements IComponent {
     }
 
     @Override
-    public void render(MatrixStack stack, PlayerEntity player, int x, int y, float delta) {
-        Minecraft mc = Minecraft.getInstance();
-
-        RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-        RenderSystem.enableRescaleNormal();
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-
+    public void render(MatrixStack stack, Minecraft mc, PlayerEntity player, int x, int y, float delta) {
         mc.getTextureManager().bind(IngameGui.WIDGETS_LOCATION);
 
         this.blit(stack, x, y, 0, 0, 182, 22);
@@ -36,8 +28,5 @@ public class HotbarComponent extends AbstractGui implements IComponent {
 
             mc.gui.renderSlot(offsetX, offsetY, delta, player, player.inventory.items.get(i));
         }
-
-        RenderSystem.disableRescaleNormal();
-        RenderSystem.disableBlend();
     }
 }
