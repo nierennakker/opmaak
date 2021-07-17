@@ -17,13 +17,8 @@ public class HotbarComponent extends AbstractGui implements IComponent {
     }
 
     @Override
-    public void render(MatrixStack stack, int x, int y, float delta) {
+    public void render(MatrixStack stack, PlayerEntity player, int x, int y, float delta) {
         Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player = mc.gui.getCameraPlayer();
-
-        if (player == null) {
-            return;
-        }
 
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.enableRescaleNormal();
