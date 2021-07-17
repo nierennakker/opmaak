@@ -7,6 +7,7 @@ import dev.nierennakker.opmaak.impl.OpmaakAPI;
 import dev.nierennakker.opmaak.screen.OpmaakScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -36,7 +37,11 @@ public class Listener {
                 }
             }
 
-            component.render(event.getMatrixStack(), mc, player, 0, 0, event.getPartialTicks());
+            CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(component);
+            int x = nbt.getInt("x");
+            int y = nbt.getInt("y");
+
+            component.render(event.getMatrixStack(), nbt, player, x, y, event.getPartialTicks());
         }
     }
 

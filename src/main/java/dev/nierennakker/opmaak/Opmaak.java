@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.File;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -29,6 +30,7 @@ import java.util.function.Supplier;
 public class Opmaak {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final KeyBinding KEY = new KeyBinding("key.opmaak", GLFW.GLFW_KEY_O, "key.categories.misc");
+    public static final File CONFIG = new File(".", "opmaak.dat");
 
     public Opmaak() {
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));

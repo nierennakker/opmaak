@@ -5,6 +5,7 @@ import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.api.IComponentScreen;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class OpmaakScreen extends Screen implements IComponentScreen {
@@ -15,7 +16,11 @@ public class OpmaakScreen extends Screen implements IComponentScreen {
     @Override
     public void init() {
         for (IComponent component : OpmaakAPI.INSTANCE.getComponents()) {
-            this.addButton(new ComponentWidget(component));
+            CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(component);
+            int x = nbt.getInt("x");
+            int y = nbt.getInt("y");
+
+            this.addButton(new ComponentWidget(component, x, y));
         }
     }
 
@@ -24,5 +29,12 @@ public class OpmaakScreen extends Screen implements IComponentScreen {
         this.renderBackground(stack);
 
         super.render(stack, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public void onClose() {
+        OpmaakAPI.INSTANCE.writeStorage();
+
+        super.onClose();
     }
 }

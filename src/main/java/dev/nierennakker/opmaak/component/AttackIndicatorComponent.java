@@ -5,6 +5,7 @@ import dev.nierennakker.opmaak.api.IOpmaakAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -21,8 +22,8 @@ public class AttackIndicatorComponent extends HotbarComponent {
     }
 
     @Override
-    public void render(MatrixStack stack, Minecraft mc, PlayerEntity player, int x, int y, float delta) {
-        mc.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
+    public void render(MatrixStack stack, CompoundNBT nbt, PlayerEntity player, int x, int y, float delta) {
+        Minecraft.getInstance().getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
 
         float strength = player.getAttackStrengthScale(0.0f);
 
@@ -37,12 +38,12 @@ public class AttackIndicatorComponent extends HotbarComponent {
     }
 
     @Override
-    public int getWidth() {
+    public int getWidth(CompoundNBT nbt) {
         return 22;
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight(CompoundNBT nbt) {
         return 22;
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.IngameGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -24,7 +25,8 @@ public class OffhandComponent extends AbstractGui implements IComponent {
     }
 
     @Override
-    public void render(MatrixStack stack, Minecraft mc, PlayerEntity player, int x, int y, float delta) {
+    public void render(MatrixStack stack, CompoundNBT nbt, PlayerEntity player, int x, int y, float delta) {
+        Minecraft mc = Minecraft.getInstance();
         ItemStack item = player.getOffhandItem();
 
         if (item.isEmpty()) {
@@ -38,12 +40,12 @@ public class OffhandComponent extends AbstractGui implements IComponent {
     }
 
     @Override
-    public int getWidth() {
+    public int getWidth(CompoundNBT nbt) {
         return 22;
     }
 
     @Override
-    public int getHeight() {
+    public int getHeight(CompoundNBT nbt) {
         return 22;
     }
 }
