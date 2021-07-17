@@ -6,6 +6,7 @@ import dev.nierennakker.opmaak.impl.OpmaakAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -28,6 +29,13 @@ public class Listener {
 
         for (IComponent component : components) {
             component.render(event.getMatrixStack(), mc, player, 0, 0, event.getPartialTicks());
+        }
+    }
+
+    @SubscribeEvent
+    public static void keyPress(InputEvent.KeyInputEvent event) {
+        if (Opmaak.KEY.consumeClick()) {
+            Opmaak.LOGGER.info("pressed");
         }
     }
 }
