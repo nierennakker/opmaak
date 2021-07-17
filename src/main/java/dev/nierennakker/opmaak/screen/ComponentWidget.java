@@ -44,7 +44,10 @@ public class ComponentWidget extends AbstractButton {
         }
 
         this.component.render(stack, nbt, player, this.x, this.y, delta);
-        mc.font.drawShadow(stack, this.getMessage(), this.x, this.y - 10, 0xffffffff);
+
+        if (this.isHovered || this.isFocused()) {
+            mc.font.drawShadow(stack, this.getMessage(), this.x, this.y <= 10 ? this.y + this.height + 3 : this.y - 10, 0xffffffff);
+        }
     }
 
     @Override
