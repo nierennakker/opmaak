@@ -3,16 +3,17 @@ package dev.nierennakker.opmaak.impl;
 import com.google.common.collect.ImmutableList;
 import dev.nierennakker.opmaak.Opmaak;
 import dev.nierennakker.opmaak.api.IComponent;
+import dev.nierennakker.opmaak.api.IComponentScreen;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
 import dev.nierennakker.opmaak.util.Alignment;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
-import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public enum OpmaakAPI implements IOpmaakAPI {
     INSTANCE;
@@ -42,17 +43,31 @@ public enum OpmaakAPI implements IOpmaakAPI {
             return;
         }
 
+        OverlayRegistry.enableOverlay(component.getOverlay(), false);
+        OverlayRegistry.registerOverlayTop(component.getID().toString(), (gui, stack, delta, width, height) -> {
+            var mc = Minecraft.getInstance();
+            var player = mc.gui.getCameraPlayer();
+
+            if (mc.screen instanceof IComponentScreen && !((IComponentScreen) mc.screen).displayComponent(component)) {
+                return;
+            }
+
+            var nbt = OpmaakAPI.INSTANCE.getComponentStorage(component);
+            var position = Alignment.toAbsolute(nbt.getString("alignment"), nbt.getInt("x"), nbt.getInt("y"));
+
+            if (position == null) {
+                return;
+            }
+
+            component.render(stack, nbt, player, position.getA(), position.getB(), delta);
+        });
+
         this.components.add(component);
     }
 
     @Override
     public List<IComponent> getComponents() {
         return ImmutableList.copyOf(this.components);
-    }
-
-    @Override
-    public List<IComponent> getComponentsForOverlay(IIngameOverlay overlay) {
-        return this.components.stream().filter((c) -> c.getOverlay() == overlay).collect(Collectors.toList());
     }
 
     @Override
