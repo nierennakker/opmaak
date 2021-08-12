@@ -44,7 +44,7 @@ public enum OpmaakAPI implements IOpmaakAPI {
         }
 
         OverlayRegistry.enableOverlay(component.getOverlay(), false);
-        OverlayRegistry.registerOverlayTop(component.getID().toString(), (gui, stack, delta, width, height) -> {
+        OverlayRegistry.registerOverlayAbove(component.getOverlay(), component.getID().toString(), (gui, stack, delta, width, height) -> {
             var mc = Minecraft.getInstance();
             var player = mc.gui.getCameraPlayer();
 
