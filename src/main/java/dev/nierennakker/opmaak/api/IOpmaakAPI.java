@@ -1,7 +1,7 @@
 package dev.nierennakker.opmaak.api;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.client.gui.IIngameOverlay;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ public interface IOpmaakAPI {
 
     List<IComponent> getComponents();
 
-    List<IComponent> getComponentsForType(ElementType type);
+    List<IComponent> getComponentsForOverlay(IIngameOverlay overlay);
 
-    CompoundNBT getComponentStorage(IComponent component);
+    CompoundTag getComponentStorage(IComponent component);
 
     void writeStorage();
 }

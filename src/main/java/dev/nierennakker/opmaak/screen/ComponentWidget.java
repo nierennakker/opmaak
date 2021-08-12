@@ -1,16 +1,15 @@
 package dev.nierennakker.opmaak.screen;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.nierennakker.opmaak.Opmaak;
 import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.impl.OpmaakAPI;
 import dev.nierennakker.opmaak.util.Alignment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Tuple;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.nbt.CompoundTag;
 import org.lwjgl.glfw.GLFW;
 
 public class ComponentWidget extends AbstractButton {
@@ -26,15 +25,15 @@ public class ComponentWidget extends AbstractButton {
     }
 
     @Override
-    public void renderButton(MatrixStack stack, int mouseX, int mouseY, float delta) {
-        Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player = mc.gui.getCameraPlayer();
-        CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(this.component);
+    public void renderButton(PoseStack stack, int mouseX, int mouseY, float delta) {
+        var mc = Minecraft.getInstance();
+        var player = mc.gui.getCameraPlayer();
+        var nbt = OpmaakAPI.INSTANCE.getComponentStorage(this.component);
 
         this.width = this.component.getWidth(nbt);
         this.height = this.component.getHeight(nbt);
 
-        AbstractGui.fill(stack, this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, 0x60000000);
+        GuiComponent.fill(stack, this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, 0x60000000);
 
         if (this.isHovered()) {
             this.vLine(stack, this.x - 1, this.y - 2, this.y + this.height + 1, 0xffffffff);
@@ -48,6 +47,11 @@ public class ComponentWidget extends AbstractButton {
         if (this.isHovered || this.isFocused()) {
             mc.font.drawShadow(stack, this.getMessage(), this.x, this.y <= 10 ? this.y + this.height + 3 : this.y - 10, 0xffffffff);
         }
+    }
+
+    @Override
+    public void updateNarration(NarrationElementOutput output) {
+        this.defaultButtonNarrationText(output);
     }
 
     @Override
@@ -73,8 +77,8 @@ public class ComponentWidget extends AbstractButton {
             return;
         }
 
-        CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(this.component);
-        Tuple<Integer, Integer> position = Alignment.toAbsolute(nbt.getString("alignment"), nbt.getInt("x"), nbt.getInt("y"));
+        var nbt = OpmaakAPI.INSTANCE.getComponentStorage(this.component);
+        var position = Alignment.toAbsolute(nbt.getString("alignment"), nbt.getInt("x"), nbt.getInt("y"));
 
         if (position != null && this.x == position.getA() && this.y == position.getB()) {
             this.onPress();
@@ -89,7 +93,7 @@ public class ComponentWidget extends AbstractButton {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (this.active && this.visible) {
-            CompoundNBT nbt = OpmaakAPI.INSTANCE.getComponentStorage(this.component);
+            var nbt = OpmaakAPI.INSTANCE.getComponentStorage(this.component);
 
             if (keyCode == GLFW.GLFW_KEY_UP) {
                 this.y--;
@@ -107,8 +111,8 @@ public class ComponentWidget extends AbstractButton {
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    private void savePosition(CompoundNBT nbt) {
-        Tuple<Integer, Integer> position = Alignment.toRelative(this.x, this.y, nbt.getString("alignment"));
+    private void savePosition(CompoundTag nbt) {
+        var position = Alignment.toRelative(this.x, this.y, nbt.getString("alignment"));
 
         if (position == null) {
             return;

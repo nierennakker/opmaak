@@ -1,51 +1,58 @@
 package dev.nierennakker.opmaak.component;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.IngameGui;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
 
-public class OffhandComponent extends AbstractGui implements IComponent {
+public class OffhandComponent extends GuiComponent implements IComponent {
     @Override
     public ResourceLocation getID() {
         return new ResourceLocation(IOpmaakAPI.MOD_ID, "offhand");
     }
 
     @Override
-    public ITextComponent getName() {
-        return new TranslationTextComponent("component.offhand");
+    public Component getName() {
+        return new TranslatableComponent("component.offhand");
     }
 
     @Override
-    public void render(MatrixStack stack, CompoundNBT nbt, PlayerEntity player, int x, int y, float delta) {
-        Minecraft mc = Minecraft.getInstance();
-        ItemStack item = player.getOffhandItem();
+    public IIngameOverlay getOverlay() {
+        return ForgeIngameGui.HOTBAR_ELEMENT;
+    }
+
+    @Override
+    public void render(PoseStack stack, CompoundTag nbt, Player player, int x, int y, float delta) {
+        var mc = Minecraft.getInstance();
+        var item = player.getOffhandItem();
 
         if (item.isEmpty()) {
             return;
         }
 
-        mc.getTextureManager().bind(IngameGui.WIDGETS_LOCATION);
+        RenderSystem.setShaderTexture(0, Gui.WIDGETS_LOCATION);
 
         this.blit(stack, x, y - 1, 24, 22, 29, 24);
-        mc.gui.renderSlot(x + 3, y + 3, delta, player, item);
+        mc.gui.renderSlot(x + 3, y + 3, delta, player, item, 10);
     }
 
     @Override
-    public int getWidth(CompoundNBT nbt) {
+    public int getWidth(CompoundTag nbt) {
         return 22;
     }
 
     @Override
-    public int getHeight(CompoundNBT nbt) {
+    public int getHeight(CompoundTag nbt) {
         return 22;
     }
 }

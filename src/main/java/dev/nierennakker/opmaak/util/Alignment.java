@@ -1,7 +1,6 @@
 package dev.nierennakker.opmaak.util;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Tuple;
 
@@ -31,40 +30,22 @@ public class Alignment {
             return null;
         }
 
-        MainWindow window = Minecraft.getInstance().getWindow();
-        int width = window.getGuiScaledWidth();
-        int height = window.getGuiScaledHeight();
-        String[] parts = align.split("-");
+        var window = Minecraft.getInstance().getWindow();
+        var width = window.getGuiScaledWidth();
+        var height = window.getGuiScaledHeight();
+        var parts = align.split("-");
 
-        int a;
+        var a = switch (parts[1]) {
+            case "left" -> x;
+            case "right" -> relative ? x - width : x + width;
+            default -> relative ? x - width / 2 : x + width / 2;
+        };
 
-        switch (parts[1]) {
-            case "left":
-                a = x;
-                break;
-            case "right":
-                a = relative ? x - width : x + width;
-                break;
-            default:
-                int half = width / 2;
-                a = relative ? x - half : x + half;
-                break;
-        }
-
-        int b;
-
-        switch (parts[0]) {
-            case "top":
-                b = y;
-                break;
-            case "bottom":
-                b = relative ? y - height : y + height;
-                break;
-            default:
-                int half = height / 2;
-                b = relative ? y - half : y + half;
-                break;
-        }
+        var b = switch (parts[0]) {
+            case "top" -> y;
+            case "bottom" -> relative ? y - height : y + height;
+            default -> relative ? y - height / 2 : y + height / 2;
+        };
 
         return new Tuple<>(a, b);
     }

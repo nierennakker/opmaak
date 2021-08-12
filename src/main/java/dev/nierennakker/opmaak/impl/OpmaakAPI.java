@@ -4,9 +4,10 @@ import com.google.common.collect.ImmutableList;
 import dev.nierennakker.opmaak.Opmaak;
 import dev.nierennakker.opmaak.api.IComponent;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import dev.nierennakker.opmaak.util.Alignment;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtIo;
+import net.minecraftforge.client.gui.IIngameOverlay;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,21 +17,21 @@ import java.util.stream.Collectors;
 public enum OpmaakAPI implements IOpmaakAPI {
     INSTANCE;
 
-    private final CompoundNBT nbt;
+    private final CompoundTag tag;
     private final List<IComponent> components = new ArrayList<>();
 
     OpmaakAPI() {
-        CompoundNBT nbt = new CompoundNBT();
+        var nbt = new CompoundTag();
 
         if (Opmaak.CONFIG.exists()) {
             try {
-                nbt = CompressedStreamTools.readCompressed(Opmaak.CONFIG);
+                nbt = NbtIo.readCompressed(Opmaak.CONFIG);
             } catch (IOException e) {
                 Opmaak.LOGGER.warn(e);
             }
         }
 
-        this.nbt = nbt;
+        this.tag = nbt;
     }
 
     @Override
@@ -50,24 +51,24 @@ public enum OpmaakAPI implements IOpmaakAPI {
     }
 
     @Override
-    public List<IComponent> getComponentsForType(ElementType type) {
-        return this.components.stream().filter((c) -> c.getType() == type).collect(Collectors.toList());
+    public List<IComponent> getComponentsForOverlay(IIngameOverlay overlay) {
+        return this.components.stream().filter((c) -> c.getOverlay() == overlay).collect(Collectors.toList());
     }
 
     @Override
-    public CompoundNBT getComponentStorage(IComponent component) {
-        CompoundNBT compound = this.nbt.getCompound("components");
-        String key = component.getID().toString();
+    public CompoundTag getComponentStorage(IComponent component) {
+        var compound = this.tag.getCompound("components");
+        var key = component.getID().toString();
 
         if (!compound.contains(key)) {
-            CompoundNBT nbt = new CompoundNBT();
+            CompoundTag tag = new CompoundTag();
 
-            nbt.putInt("x", 0);
-            nbt.putInt("y", 0);
-            nbt.putString("alignment", "middle-center");
-            compound.put(key, nbt);
+            tag.putInt("x", 0);
+            tag.putInt("y", 0);
+            tag.putString("alignment", Alignment.ALIGNMENTS.get(4));
+            compound.put(key, tag);
 
-            this.nbt.put("components", compound);
+            this.tag.put("components", compound);
         }
 
         return compound.getCompound(key);
@@ -77,7 +78,7 @@ public enum OpmaakAPI implements IOpmaakAPI {
     public void writeStorage() {
         try {
             Opmaak.CONFIG.createNewFile();
-            CompressedStreamTools.writeCompressed(this.nbt, Opmaak.CONFIG);
+            NbtIo.writeCompressed(this.tag, Opmaak.CONFIG);
         } catch (IOException e) {
             Opmaak.LOGGER.warn(e);
         }

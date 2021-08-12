@@ -1,24 +1,22 @@
 package dev.nierennakker.opmaak.api;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.client.gui.IIngameOverlay;
 
 public interface IComponent {
     ResourceLocation getID();
 
-    ITextComponent getName();
+    Component getName();
 
-    default ElementType getType() {
-        return ElementType.HOTBAR;
-    }
+    IIngameOverlay getOverlay();
 
-    void render(MatrixStack stack, CompoundNBT nbt, PlayerEntity player, int x, int y, float delta);
+    void render(PoseStack stack, CompoundTag nbt, Player player, int x, int y, float delta);
 
-    int getWidth(CompoundNBT nbt);
+    int getWidth(CompoundTag nbt);
 
-    int getHeight(CompoundNBT nbt);
+    int getHeight(CompoundTag nbt);
 }

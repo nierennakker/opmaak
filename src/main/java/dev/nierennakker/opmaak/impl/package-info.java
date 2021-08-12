@@ -2,6 +2,6 @@
 @MethodsReturnNonnullByDefault
 package dev.nierennakker.opmaak.impl;
 
-import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

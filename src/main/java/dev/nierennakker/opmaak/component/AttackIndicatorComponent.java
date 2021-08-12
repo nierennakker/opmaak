@@ -1,14 +1,14 @@
 package dev.nierennakker.opmaak.component;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.nierennakker.opmaak.api.IOpmaakAPI;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 public class AttackIndicatorComponent extends HotbarComponent {
     @Override
@@ -17,33 +17,33 @@ public class AttackIndicatorComponent extends HotbarComponent {
     }
 
     @Override
-    public ITextComponent getName() {
-        return new TranslationTextComponent("component.attack_indicator");
+    public Component getName() {
+        return new TranslatableComponent("component.attack_indicator");
     }
 
     @Override
-    public void render(MatrixStack stack, CompoundNBT nbt, PlayerEntity player, int x, int y, float delta) {
-        Minecraft.getInstance().getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
+    public void render(PoseStack stack, CompoundTag nbt, Player player, int x, int y, float delta) {
+        RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
 
-        float strength = player.getAttackStrengthScale(0.0f);
+        var strength = player.getAttackStrengthScale(0.0f);
 
         if (strength >= 1.0f) {
             return;
         }
 
-        int height = (int) (strength * 18.0f);
+        var height = (int) (strength * 18.0f);
 
         this.blit(stack, x + 2, y + 2, 0, 94, 18, 18);
         this.blit(stack, x + 2, y + 20 - height, 18, 112 - height, 18, height);
     }
 
     @Override
-    public int getWidth(CompoundNBT nbt) {
+    public int getWidth(CompoundTag nbt) {
         return 22;
     }
 
     @Override
-    public int getHeight(CompoundNBT nbt) {
+    public int getHeight(CompoundTag nbt) {
         return 22;
     }
 }
