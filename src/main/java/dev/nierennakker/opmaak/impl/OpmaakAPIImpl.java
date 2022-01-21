@@ -9,6 +9,7 @@ import dev.nierennakker.opmaak.util.Alignment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
+import net.minecraftforge.client.gui.IIngameOverlay;
 import net.minecraftforge.client.gui.OverlayRegistry;
 
 import java.io.IOException;
@@ -43,8 +44,9 @@ public enum OpmaakAPIImpl implements OpmaakAPI {
             return;
         }
 
-        OverlayRegistry.enableOverlay(widget.getOverlay(), false);
-        OverlayRegistry.registerOverlayAbove(widget.getOverlay(), widget.getID().toString(), (gui, stack, delta, width, height) -> {
+        var override = widget.getOverlay();
+        var id = widget.getID().toString();
+        IIngameOverlay overlay = (gui, stack, delta, width, height) -> {
             var mc = Minecraft.getInstance();
             var player = mc.gui.getCameraPlayer();
 
@@ -61,7 +63,14 @@ public enum OpmaakAPIImpl implements OpmaakAPI {
 
             gui.setupOverlayRenderState(true, false);
             widget.render(stack, nbt, player, position.getA(), position.getB(), delta);
-        });
+        };
+
+        if (override != null) {
+            OverlayRegistry.enableOverlay(override, false);
+            OverlayRegistry.registerOverlayAbove(override, id, overlay);
+        } else {
+            OverlayRegistry.registerOverlayTop(id, overlay);
+        }
 
         this.widgets.add(widget);
     }

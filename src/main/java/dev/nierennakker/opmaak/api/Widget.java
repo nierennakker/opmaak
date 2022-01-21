@@ -7,12 +7,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.IIngameOverlay;
 
+import javax.annotation.Nullable;
+
 public interface Widget {
     ResourceLocation getID();
 
     Component getName();
 
-    IIngameOverlay getOverlay();
+    @Nullable
+    default IIngameOverlay getOverlay() {
+        return null;
+    }
 
     void render(PoseStack stack, CompoundTag nbt, Player player, int x, int y, float delta);
 
