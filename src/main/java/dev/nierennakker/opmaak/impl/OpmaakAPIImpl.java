@@ -48,7 +48,7 @@ public enum OpmaakAPIImpl implements OpmaakAPI {
             var mc = Minecraft.getInstance();
             var player = mc.gui.getCameraPlayer();
 
-            if (mc.screen instanceof WidgetScreen && !((WidgetScreen) mc.screen).displayWidget(widget)) {
+            if (mc.screen instanceof WidgetScreen screen && !screen.displayWidget(widget)) {
                 return;
             }
 
@@ -59,6 +59,7 @@ public enum OpmaakAPIImpl implements OpmaakAPI {
                 return;
             }
 
+            gui.setupOverlayRenderState(true, false);
             widget.render(stack, nbt, player, position.getA(), position.getB(), delta);
         });
 

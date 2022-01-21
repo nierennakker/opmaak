@@ -35,7 +35,7 @@ public class WidgetComponent extends AbstractButton {
 
         GuiComponent.fill(stack, this.x - 1, this.y - 1, this.x + this.width + 1, this.y + this.height + 1, 0x60000000);
 
-        if (this.isHovered) {
+        if (this.isHovered || this.isFocused()) {
             this.vLine(stack, this.x - 1, this.y - 2, this.y + this.height + 1, 0xffffffff);
             this.vLine(stack, this.x + this.width, this.y - 2, this.y + this.height + 1, 0xffffffff);
             this.hLine(stack, this.x, this.x + this.width - 1, this.y - 1, 0xffffffff);

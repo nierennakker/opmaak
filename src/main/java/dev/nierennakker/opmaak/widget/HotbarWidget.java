@@ -2,8 +2,8 @@ package dev.nierennakker.opmaak.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.nierennakker.opmaak.api.Widget;
 import dev.nierennakker.opmaak.api.OpmaakAPI;
+import dev.nierennakker.opmaak.api.Widget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;

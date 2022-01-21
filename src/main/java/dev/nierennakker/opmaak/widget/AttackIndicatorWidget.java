@@ -1,9 +1,7 @@
 package dev.nierennakker.opmaak.widget;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.nierennakker.opmaak.api.OpmaakAPI;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -23,8 +21,6 @@ public class AttackIndicatorWidget extends HotbarWidget {
 
     @Override
     public void render(PoseStack stack, CompoundTag nbt, Player player, int x, int y, float delta) {
-        RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
-
         var strength = player.getAttackStrengthScale(0.0f);
 
         if (strength >= 1.0f) {
