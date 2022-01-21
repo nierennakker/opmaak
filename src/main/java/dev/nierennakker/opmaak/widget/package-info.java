@@ -1,6 +1,6 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package dev.nierennakker.opmaak.component;
+package dev.nierennakker.opmaak.widget;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

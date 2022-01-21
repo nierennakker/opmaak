@@ -4,15 +4,15 @@ import net.minecraft.nbt.CompoundTag;
 
 import java.util.List;
 
-public interface IOpmaakAPI {
+public interface OpmaakAPI {
     String MOD_ID = "opmaak";
     String API_METHOD = "api";
 
-    void registerComponent(IComponent component);
+    void registerWidget(Widget widget);
 
-    List<IComponent> getComponents();
+    List<Widget> getWidgets();
 
-    CompoundTag getComponentStorage(IComponent component);
+    CompoundTag getWidgetStorage(Widget widget);
 
     void writeStorage();
 }

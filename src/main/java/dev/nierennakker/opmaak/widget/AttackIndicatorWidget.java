@@ -1,8 +1,8 @@
-package dev.nierennakker.opmaak.component;
+package dev.nierennakker.opmaak.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.nierennakker.opmaak.api.IOpmaakAPI;
+import dev.nierennakker.opmaak.api.OpmaakAPI;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -10,15 +10,15 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
-public class AttackIndicatorComponent extends HotbarComponent {
+public class AttackIndicatorWidget extends HotbarWidget {
     @Override
     public ResourceLocation getID() {
-        return new ResourceLocation(IOpmaakAPI.MOD_ID, "attack_indicator");
+        return new ResourceLocation(OpmaakAPI.MOD_ID, "attack_indicator");
     }
 
     @Override
     public Component getName() {
-        return new TranslatableComponent("component.attack_indicator");
+        return new TranslatableComponent("widget.attack_indicator");
     }
 
     @Override

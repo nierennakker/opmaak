@@ -1,10 +1,10 @@
 package dev.nierennakker.opmaak;
 
-import dev.nierennakker.opmaak.api.IOpmaakAPI;
-import dev.nierennakker.opmaak.component.AttackIndicatorComponent;
-import dev.nierennakker.opmaak.component.HotbarComponent;
-import dev.nierennakker.opmaak.component.OffhandComponent;
-import dev.nierennakker.opmaak.impl.OpmaakAPI;
+import dev.nierennakker.opmaak.api.OpmaakAPI;
+import dev.nierennakker.opmaak.widget.AttackIndicatorWidget;
+import dev.nierennakker.opmaak.widget.HotbarWidget;
+import dev.nierennakker.opmaak.widget.OffhandWidget;
+import dev.nierennakker.opmaak.impl.OpmaakAPIImpl;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-@Mod(IOpmaakAPI.MOD_ID)
+@Mod(OpmaakAPI.MOD_ID)
 public class Opmaak {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final KeyMapping KEY = new KeyMapping("key.opmaak", GLFW.GLFW_KEY_O, "key.categories.misc");
@@ -42,19 +42,19 @@ public class Opmaak {
 
     @SubscribeEvent
     public void enqueueIMC(InterModEnqueueEvent event) {
-        InterModComms.sendTo(IOpmaakAPI.MOD_ID, IOpmaakAPI.API_METHOD, () -> (Consumer<IOpmaakAPI>) (api) -> {
-            api.registerComponent(new AttackIndicatorComponent());
-            api.registerComponent(new HotbarComponent());
-            api.registerComponent(new OffhandComponent());
+        InterModComms.sendTo(OpmaakAPI.MOD_ID, OpmaakAPI.API_METHOD, () -> (Consumer<OpmaakAPI>) (api) -> {
+            api.registerWidget(new AttackIndicatorWidget());
+            api.registerWidget(new HotbarWidget());
+            api.registerWidget(new OffhandWidget());
         });
     }
 
     @SubscribeEvent
     public void processIMC(InterModProcessEvent event) {
-        event.getIMCStream(IOpmaakAPI.API_METHOD::equals).forEach((message) -> {
-            var value = (Supplier<Consumer<IOpmaakAPI>>) message.messageSupplier();
+        event.getIMCStream(OpmaakAPI.API_METHOD::equals).forEach((message) -> {
+            var value = (Supplier<Consumer<OpmaakAPI>>) message.messageSupplier();
 
-            value.get().accept(OpmaakAPI.INSTANCE);
+            value.get().accept(OpmaakAPIImpl.INSTANCE);
         });
     }
 }
