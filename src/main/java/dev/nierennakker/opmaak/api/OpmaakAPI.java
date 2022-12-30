@@ -1,6 +1,7 @@
 package dev.nierennakker.opmaak.api;
 
-import net.minecraft.nbt.CompoundTag;
+import dev.nierennakker.opmaak.api.setting.WidgetStorage;
+import net.minecraftforge.client.gui.overlay.NamedGuiOverlay;
 
 import java.util.List;
 
@@ -12,7 +13,9 @@ public interface OpmaakAPI {
 
     List<Widget> getWidgets();
 
-    CompoundTag getWidgetStorage(Widget widget);
+    List<Widget> getWidgetsForOverlay(NamedGuiOverlay overlay);
+
+    WidgetStorage getWidgetStorage(Widget widget);
 
     void writeStorage();
 }

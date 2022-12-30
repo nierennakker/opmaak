@@ -2,9 +2,8 @@ package dev.nierennakker.opmaak.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.nierennakker.opmaak.api.OpmaakAPI;
-import net.minecraft.nbt.CompoundTag;
+import dev.nierennakker.opmaak.api.setting.WidgetStorage;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -16,11 +15,11 @@ public class AttackIndicatorWidget extends HotbarWidget {
 
     @Override
     public Component getName() {
-        return new TranslatableComponent("widget.attack_indicator");
+        return Component.translatable("widget.attack_indicator");
     }
 
     @Override
-    public void render(PoseStack stack, CompoundTag nbt, Player player, int x, int y, float delta) {
+    public void render(PoseStack stack, WidgetStorage storage, Player player, int x, int y, float delta) {
         var strength = player.getAttackStrengthScale(0.0f);
 
         if (strength >= 1.0f) {
@@ -34,12 +33,12 @@ public class AttackIndicatorWidget extends HotbarWidget {
     }
 
     @Override
-    public int getWidth(CompoundTag nbt) {
+    public int getWidth(WidgetStorage storage) {
         return 22;
     }
 
     @Override
-    public int getHeight(CompoundTag nbt) {
+    public int getHeight(WidgetStorage storage) {
         return 22;
     }
 }

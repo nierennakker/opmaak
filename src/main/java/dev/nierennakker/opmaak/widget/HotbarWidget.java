@@ -4,16 +4,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.nierennakker.opmaak.api.OpmaakAPI;
 import dev.nierennakker.opmaak.api.Widget;
+import dev.nierennakker.opmaak.api.setting.WidgetSetting;
+import dev.nierennakker.opmaak.api.setting.WidgetStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 
 public class HotbarWidget extends GuiComponent implements Widget {
     @Override
@@ -23,16 +22,16 @@ public class HotbarWidget extends GuiComponent implements Widget {
 
     @Override
     public Component getName() {
-        return new TranslatableComponent("widget.hotbar");
+        return Component.translatable("widget.hotbar");
     }
 
     @Override
-    public IIngameOverlay getOverlay() {
-        return ForgeIngameGui.HOTBAR_ELEMENT;
+    public VanillaGuiOverlay getOverlay() {
+        return VanillaGuiOverlay.HOTBAR;
     }
 
     @Override
-    public void render(PoseStack stack, CompoundTag nbt, Player player, int x, int y, float delta) {
+    public void render(PoseStack stack, WidgetStorage storage, Player player, int x, int y, float delta) {
         var mc = Minecraft.getInstance();
 
         RenderSystem.setShaderTexture(0, Gui.WIDGETS_LOCATION);
@@ -49,19 +48,19 @@ public class HotbarWidget extends GuiComponent implements Widget {
     }
 
     @Override
-    public int getWidth(CompoundTag nbt) {
+    public int getWidth(WidgetStorage storage) {
         return 182;
     }
 
     @Override
-    public int getHeight(CompoundTag nbt) {
+    public int getHeight(WidgetStorage storage) {
         return 22;
     }
 
     @Override
-    public void writeDefaultStorage(CompoundTag nbt) {
-        nbt.putInt("x", this.getWidth(nbt) / -2);
-        nbt.putInt("y", -this.getHeight(nbt));
-        nbt.putString("alignment", "bottom-center");
+    public void writeDefaultStorage(WidgetStorage storage) {
+        storage.set(WidgetSetting.X, this.getWidth(storage) / -2);
+        storage.set(WidgetSetting.Y, -this.getHeight(storage));
+        storage.set(WidgetSetting.ALIGNMENT, "bottom-center");
     }
 }

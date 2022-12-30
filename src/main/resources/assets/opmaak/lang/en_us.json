@@ -1,7 +1,26 @@
 {
   "key.opmaak": "Opmaak",
   "screen.opmaak": "Opmaak",
+  "screen.opmaak.settings": "Settings",
   "widget.attack_indicator": "Attack Indicator",
   "widget.hotbar": "Hotbar",
-  "widget.offhand": "Offhand"
+  "widget.offhand": "Offhand",
+  "setting.enabled": "Enabled",
+  "setting.enabled.true": "Yes",
+  "setting.enabled.false": "No",
+  "setting.x": "X position",
+  "setting.y": "Y position",
+  "setting.alignment": "Alignment",
+  "setting.alignment.top-left": "Top left",
+  "setting.alignment.top-center": "Top center",
+  "setting.alignment.top-right": "Top right",
+  "setting.alignment.middle-left": "Middle left",
+  "setting.alignment.middle-center": "Middle center",
+  "setting.alignment.middle-right": "Middle right",
+  "setting.alignment.bottom-left": "Bottom left",
+  "setting.alignment.bottom-center": "Bottom center",
+  "setting.alignment.bottom-right": "Bottom right",
+  "setting.visibility": "Visibility",
+  "setting.visibility.always": "Always",
+  "setting.visibility.automatic": "Automatic"
 }
